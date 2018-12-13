@@ -1,32 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Node, TreeTableNode } from './models';
+import { TreeService } from './tree.service';
 import * as _ from 'lodash';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'tree-table';
-  ELEMENT_DATA: PeriodicElement[] = [
-    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-    {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  ];
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = this.ELEMENT_DATA;
+export class AppComponent implements OnInit {
+  tree: Node<number>;
+  treeTable: Node<number>[];
+  displayedColumns: string[] = ['value'];
+  dataSource: MatTableDataSource<Node<number>>;
+
+  constructor(private treeService: TreeService) { }
+
+  ngOnInit() {
+    this.tree = _.cloneDeep(exampleTree);
+    this.treeService.traverse(this.tree, (node: TreeTableNode<number>) => {
+      node.depth = this.treeService.getNodeDepth(exampleTree, node);
+      node.isExpanded = true;
+      node.isVisible = true;
+    });
+    this.treeTable = this.treeService.flatten(this.tree);
+    this.dataSource = new MatTableDataSource(this.treeTable);
+  }
+
+  formatIndentation(element: TreeTableNode<number>, step: number = 3): string {
+    return '&nbsp;'.repeat(element.depth * step) + element.value;
+  }
 }
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+export const exampleTree: Node<number> = {
+  value: 1,
+  id: '1',
+  children: [
+    {
+      value: 2,
+      id: '2',
+      children: []
+    },
+    {
+      value: 3,
+      id: '3',
+      children: [
+        {
+          value: 4,
+          id: '4',
+          children: []
+        }
+      ]
+    }
+  ]
+};

@@ -14,10 +14,10 @@ export class TreeService {
     });
   }
 
-  searchById<T>(element: Node<T>, id: string): NodeInTree<T> {
+  searchById<T>(root: Node<T>, id: string): NodeInTree<T> {
     let matchingNode: Node<T>;
     const pathToRoot = new Map<string, Node<T>>();
-    this._traverse(element, (node: Node<T>) => {
+    this._traverse(root, (node: Node<T>) => {
       matchingNode = node;
       node.children.forEach(child => {
         pathToRoot[child.id] = node;
@@ -44,6 +44,21 @@ export class TreeService {
         });
       }
     }
+  }
+
+  getNodeDepth<T>(root: Node<T>, node: Node<T>): number {
+    return this.searchById(root, node.id).pathToRoot.length;
+  }
+
+  flatten<T>(root: Node<T>): Node<T>[] {
+    const result = [_.cloneDeep(root)];
+    for (let i = 0; i < result.length; i++) {
+      const node = result[i];
+      if (node.children) {
+        result.splice(result.indexOf(node) + 1, 0, ...node.children);
+      }
+    }
+    return result;
   }
 
   private buildPath<T>(id: string, pathMap: Map<string, Node<T>>): Node<T>[] {
