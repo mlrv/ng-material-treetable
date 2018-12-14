@@ -11,9 +11,9 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class TreetableComponent implements OnInit {
   tree: Node<number>;
-  treeTable: Node<number>[];
+  treeTable: TreeTableNode<number>[];
   displayedColumns: string[] = ['value'];
-  dataSource: MatTableDataSource<Node<number>>;
+  dataSource: MatTableDataSource<TreeTableNode<number>>;
 
   constructor(private treeService: TreeService) { }
 
@@ -24,12 +24,26 @@ export class TreetableComponent implements OnInit {
       node.isExpanded = true;
       node.isVisible = true;
     });
-    this.treeTable = this.treeService.flatten(this.tree);
-    this.dataSource = new MatTableDataSource(this.treeTable);
+    this.treeTable = this.treeService.flatten(this.tree) as TreeTableNode<number>[];
+    this.generateTable();
+  }
+
+  generateTable() {
+    this.dataSource = new MatTableDataSource(this.treeTable.filter(x => x.isVisible));
   }
 
   formatIndentation(element: TreeTableNode<number>, step: number = 3): string {
     return '&nbsp;'.repeat(element.depth * step) + element.value;
+  }
+
+  onElementClick(clickedElement: TreeTableNode<number>): void {
+    clickedElement.isExpanded = !clickedElement.isExpanded;
+    this.treeTable.forEach(el => {
+      el.isVisible = this.treeService.searchById(exampleTree, el.id)
+        .pathToRoot
+        .every(p => this.treeTable.find(x => x.id === p.id).isExpanded);
+    });
+    this.generateTable();
   }
 }
 
