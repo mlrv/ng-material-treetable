@@ -2,8 +2,14 @@
   <ng-container matColumnDef="value">
     <th mat-header-cell *matHeaderCellDef> value </th>
     <td mat-cell *matCellDef="let element">
-      <div>
-          <p (click)="onElementClick(element)" [innerHTML]="formatIndentation(element)"></p>
+      <div class="value-cell">
+          <div [innerHTML]="formatIndentation(element)"></div>
+          <mat-icon
+            [ngStyle]="{'visibility': element.children.length ? 'visible' : 'hidden'}"
+            (click)="onElementClick(element)">
+            {{element.isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}
+          </mat-icon>
+          <div>{{element.value}}</div>
       </div>
     </td>
   </ng-container>

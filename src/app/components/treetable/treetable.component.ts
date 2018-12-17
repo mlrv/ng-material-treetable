@@ -32,8 +32,8 @@ export class TreetableComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.treeTable.filter(x => x.isVisible));
   }
 
-  formatIndentation(element: TreeTableNode<number>, step: number = 3): string {
-    return '&nbsp;'.repeat(element.depth * step) + element.value;
+  formatIndentation(element: TreeTableNode<number>, step: number = 5): string {
+    return '&nbsp;'.repeat(element.depth * step);
   }
 
   onElementClick(clickedElement: TreeTableNode<number>): void {
