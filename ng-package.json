@@ -8,6 +8,7 @@
 		"core-js",
 		"rxjs",
 		"zone.js",
-		"document-register-element"
+    "document-register-element",
+    "lodash"
   ]
 }
