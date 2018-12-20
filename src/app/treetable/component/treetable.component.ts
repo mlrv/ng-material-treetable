@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Node, TreeTableNode } from '../../models';
-import { TreeService } from '../../services/tree.service';
+import { Node, TreeTableNode } from '../models';
+import { TreeService } from '../services/tree.service';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material';
 

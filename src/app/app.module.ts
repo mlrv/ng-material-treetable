@@ -1,21 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
 import { AppComponent } from './app.component';
-import { MatIconModule } from '@angular/material/icon';
-import { TreetableComponent } from './components/treetable/treetable.component';
+import { TreetableModule } from './treetable/treetable.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TreetableComponent
+    AppComponent
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatTableModule,
-    MatIconModule
+    TreetableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
