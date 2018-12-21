@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Node, NodeInTree } from '../models';
 import * as _ from 'lodash';
+import { Option, some, none } from 'fp-ts/lib/Option';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,12 @@ export class TreeService {
     let matchingNode: Node<T>;
     const pathToRoot = new Map<string, Node<T>>();
     this._traverse(root, (node: Node<T>) => {
-      matchingNode = node;
       node.children.forEach(child => {
         pathToRoot[child.id] = node;
       });
+      if (node.id === id) {
+        matchingNode = node;
+      }
       return node.id !== id;
     });
     return {
