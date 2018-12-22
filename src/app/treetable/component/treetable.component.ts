@@ -40,7 +40,7 @@ export class TreetableComponent implements OnInit {
     clickedElement.isExpanded = !clickedElement.isExpanded;
     this.treeTable.forEach(el => {
       el.isVisible = this.treeService.searchById(exampleTree, el.id)
-        .pathToRoot
+        .fold([], n => n.pathToRoot)
         .every(p => this.treeTable.find(x => x.id === p.id).isExpanded);
     });
     this.generateTable();

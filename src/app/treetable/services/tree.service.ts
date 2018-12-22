@@ -15,7 +15,7 @@ export class TreeService {
     });
   }
 
-  searchById<T>(root: Node<T>, id: string): NodeInTree<T> {
+  searchById<T>(root: Node<T>, id: string): Option<NodeInTree<T>> {
     let matchingNode: Node<T>;
     const pathToRoot = new Map<string, Node<T>>();
     this._traverse(root, (node: Node<T>) => {
@@ -27,10 +27,10 @@ export class TreeService {
       }
       return node.id !== id;
     });
-    return {
+    return matchingNode ? some({
       ...matchingNode,
       pathToRoot: this.buildPath(id, pathToRoot)
-    };
+    }) : none;
   }
 
   private _traverse<T>(root: Node<T>, f: (node: Node<T>) => boolean): void {
@@ -50,7 +50,7 @@ export class TreeService {
   }
 
   getNodeDepth<T>(root: Node<T>, node: Node<T>): number {
-    return this.searchById(root, node.id).pathToRoot.length;
+    return this.searchById(root, node.id).fold(-1, n => n.pathToRoot.length);
   }
 
   flatten<T>(root: Node<T>): Node<T>[] {
