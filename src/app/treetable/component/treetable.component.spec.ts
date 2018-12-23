@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TreetableComponent } from './treetable.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('TreetableComponent', () => {
   let component: TreetableComponent;
@@ -12,7 +13,8 @@ describe('TreetableComponent', () => {
         TreetableComponent
       ],
       imports: [
-        MatTableModule
+        MatTableModule,
+        MatIconModule
       ]
     })
     .compileComponents();
