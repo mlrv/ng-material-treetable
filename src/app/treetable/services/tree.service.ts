@@ -17,7 +17,7 @@ export class TreeService {
 
   searchById<T>(root: Node<T>, id: string): Option<NodeInTree<T>> {
     let matchingNode: Node<T>;
-    const pathToRoot = new Map<string, Node<T>>();
+    const pathToRoot: {[k: string]: Node<T>} = {};
     this._traverse(root, (node: Node<T>) => {
       node.children.forEach(child => {
         pathToRoot[child.id] = node;
@@ -34,7 +34,7 @@ export class TreeService {
   }
 
   private _traverse<T>(root: Node<T>, f: (node: Node<T>) => boolean): void {
-    const stack = [];
+    const stack: Node<T>[] = [];
     if (root) {
       stack.push(root);
       while (stack.length > 0) {
@@ -64,7 +64,7 @@ export class TreeService {
     return result;
   }
 
-  private buildPath<T>(id: string, pathMap: Map<string, Node<T>>): Node<T>[] {
+  private buildPath<T>(id: string, pathMap: {[k: string]: Node<T>}): Node<T>[] {
     const pathToRoot = [];
     let key = id;
     while (key) {
