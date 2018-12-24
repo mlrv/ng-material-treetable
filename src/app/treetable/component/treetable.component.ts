@@ -3,6 +3,7 @@ import { Node, TreeTableNode } from '../models';
 import { TreeService } from '../services/tree.service';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material';
+import { mockTree } from '../mocks/mockTree';
 
 @Component({
   selector: 'app-treetable',
@@ -18,9 +19,9 @@ export class TreetableComponent implements OnInit {
   constructor(private treeService: TreeService) { }
 
   ngOnInit() {
-    this.tree = _.cloneDeep(exampleTree);
+    this.tree = _.cloneDeep(mockTree);
     this.treeService.traverse(this.tree, (node: TreeTableNode<number>) => {
-      node.depth = this.treeService.getNodeDepth(exampleTree, node);
+      node.depth = this.treeService.getNodeDepth(mockTree, node);
       node.isExpanded = true;
       node.isVisible = true;
     });
@@ -39,34 +40,10 @@ export class TreetableComponent implements OnInit {
   onElementClick(clickedElement: TreeTableNode<number>): void {
     clickedElement.isExpanded = !clickedElement.isExpanded;
     this.treeTable.forEach(el => {
-      el.isVisible = this.treeService.searchById(exampleTree, el.id)
+      el.isVisible = this.treeService.searchById(mockTree, el.id)
         .fold([], n => n.pathToRoot)
         .every(p => this.treeTable.find(x => x.id === p.id).isExpanded);
     });
     this.generateTable();
   }
 }
-
-export const exampleTree: Node<number> = {
-  value: 1,
-  id: '1',
-  children: [
-    {
-      value: 2,
-      id: '2',
-      children: []
-    },
-    {
-      value: 3,
-      id: '3',
-      children: [
-        {
-          value: 4,
-          id: '4',
-          children: []
-        }
-      ]
-    }
-  ]
-};
-

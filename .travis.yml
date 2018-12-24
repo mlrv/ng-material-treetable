@@ -3,6 +3,7 @@ node_js:
   - "node"
 
 script:
+  - ng lint
   - ng build --prod
   - ng test
 
