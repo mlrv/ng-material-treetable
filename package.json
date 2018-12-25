@@ -1,6 +1,6 @@
 {
-  "name": "tree-table-init-test",
-  "version": "0.0.1",
+  "name": "ng-material-treetable",
+  "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

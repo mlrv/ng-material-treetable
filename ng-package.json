@@ -9,6 +9,8 @@
 		"rxjs",
 		"zone.js",
     "document-register-element",
-    "lodash"
+    "lodash",
+    "fp-ts",
+    "jsverify"
   ]
 }
