@@ -8,25 +8,25 @@ import { MatTableDataSource } from '@angular/material';
   templateUrl: './treetable.component.html',
   styleUrls: ['./treetable.component.scss']
 })
-export class TreetableComponent implements OnInit {
-  @Input() tree: Node<number>;
-  treeTable: TreeTableNode<number>[];
+export class TreetableComponent<T> implements OnInit {
+  @Input() tree: Node<T>;
+  treeTable: TreeTableNode<T>[];
   displayedColumns: string[] = ['value'];
-  dataSource: MatTableDataSource<TreeTableNode<number>>;
+  dataSource: MatTableDataSource<TreeTableNode<T>>;
 
   constructor(private treeService: TreeService) { }
 
   ngOnInit() {
-    this.treeService.traverse(this.tree, (node: TreeTableNode<number>) => {
+    this.treeService.traverse(this.tree, (node: TreeTableNode<T>) => {
       node.depth = this.treeService.getNodeDepth(this.tree, node);
       node.isExpanded = true;
       node.isVisible = true;
     });
-    this.treeTable = this.treeService.flatten(this.tree) as TreeTableNode<number>[];
+    this.treeTable = this.treeService.flatten(this.tree) as TreeTableNode<T>[];
     this.dataSource = this.generateDataSource();
   }
 
-  generateDataSource(): MatTableDataSource<TreeTableNode<number>> {
+  generateDataSource(): MatTableDataSource<TreeTableNode<T>> {
     return new MatTableDataSource(this.treeTable.filter(x => x.isVisible));
   }
 

@@ -6,8 +6,8 @@ import { mockTree } from '../mocks/mockTree';
 import * as _ from 'lodash';
 
 describe('TreetableComponent', () => {
-  let component: TreetableComponent;
-  let fixture: ComponentFixture<TreetableComponent>;
+  let component: TreetableComponent<any>;
+  let fixture: ComponentFixture<TreetableComponent<any>>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,4 +32,5 @@ describe('TreetableComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });
