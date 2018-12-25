@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Node, NodeInTree } from '../models';
+import { Node, NodeInTree } from '../../models';
 import * as _ from 'lodash';
 import { Option, some, none } from 'fp-ts/lib/Option';
 

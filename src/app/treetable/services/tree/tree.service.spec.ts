@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { TreeService } from './tree.service';
 import * as _ from 'lodash';
-import { mockTree } from '../mocks/mockTree';
+import { mockTree } from '../../mocks/mockTree';
 import { some, none } from 'fp-ts/lib/Option';
-import { Node } from '../models';
+import { Node } from '../../models';
 
 describe('TreeService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

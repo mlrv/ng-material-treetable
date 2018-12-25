@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Node, TreeTableNode } from '../models';
-import { TreeService } from '../services/tree.service';
+import { TreeService } from '../services/tree/tree.service';
 import { MatTableDataSource } from '@angular/material';
 
 @Component({
