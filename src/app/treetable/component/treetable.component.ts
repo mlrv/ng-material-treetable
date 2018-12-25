@@ -11,7 +11,8 @@ import { MatTableDataSource } from '@angular/material';
 export class TreetableComponent<T> implements OnInit {
   @Input() tree: Node<T>;
   treeTable: TreeTableNode<T>[];
-  displayedColumns: string[] = ['value'];
+  displayedColumns: string[] = ['rowIndex', 'value'];
+  propertyColumns: string[] = this.displayedColumns.filter(x => x !== 'rowIndex');
   dataSource: MatTableDataSource<TreeTableNode<T>>;
 
   constructor(private treeService: TreeService) { }
