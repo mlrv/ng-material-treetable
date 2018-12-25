@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ValidatorService } from './validator.service';
 
-fdescribe('ValidatorService', () => {
+describe('ValidatorService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {

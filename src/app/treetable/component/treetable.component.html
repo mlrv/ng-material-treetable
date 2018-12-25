@@ -1,6 +1,6 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <ng-container matColumnDef="rowIndex">
+  <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
       <div class="value-cell">
@@ -19,7 +19,7 @@
     <ng-container matColumnDef="{{column}}">
       <th mat-header-cell *matHeaderCellDef> {{column}} </th>
       <td mat-cell *matCellDef="let element">
-          {{element[column]}}
+          {{element.value[column]}}
       </td>
     </ng-container>
   </div>

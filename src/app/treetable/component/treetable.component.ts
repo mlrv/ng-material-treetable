@@ -11,13 +11,17 @@ import { MatTableDataSource } from '@angular/material';
 export class TreetableComponent<T> implements OnInit {
   @Input() tree: Node<T>;
   treeTable: TreeTableNode<T>[];
-  displayedColumns: string[] = ['rowIndex', 'value'];
-  propertyColumns: string[] = this.displayedColumns.filter(x => x !== 'rowIndex');
+  displayedColumns: string[];
+  propertyColumns: string[];
   dataSource: MatTableDataSource<TreeTableNode<T>>;
+  idProp = 'id';
 
   constructor(private treeService: TreeService) { }
 
   ngOnInit() {
+    const actualProps = this.extractNodeProps(this.tree);
+    this.displayedColumns = [this.idProp, ...actualProps];
+    this.propertyColumns = this.displayedColumns.filter(x => x !== this.idProp);
     this.treeService.traverse(this.tree, (node: TreeTableNode<T>) => {
       node.depth = this.treeService.getNodeDepth(this.tree, node);
       node.isExpanded = true;
@@ -25,6 +29,10 @@ export class TreetableComponent<T> implements OnInit {
     });
     this.treeTable = this.treeService.flatten(this.tree) as TreeTableNode<T>[];
     this.dataSource = this.generateDataSource();
+  }
+
+  extractNodeProps(tree: Node<T> & { value: { [k: string]: any } }): string[] { // Assume only one level for now
+    return Object.keys(tree.value).filter(x => typeof tree.value[x] !== 'object');
   }
 
   generateDataSource(): MatTableDataSource<TreeTableNode<T>> {
