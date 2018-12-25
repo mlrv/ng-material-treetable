@@ -23,11 +23,11 @@ export class TreetableComponent implements OnInit {
       node.isVisible = true;
     });
     this.treeTable = this.treeService.flatten(this.tree) as TreeTableNode<number>[];
-    this.generateTable();
+    this.dataSource = this.generateDataSource();
   }
 
-  generateTable() {
-    this.dataSource = new MatTableDataSource(this.treeTable.filter(x => x.isVisible));
+  generateDataSource(): MatTableDataSource<TreeTableNode<number>> {
+    return new MatTableDataSource(this.treeTable.filter(x => x.isVisible));
   }
 
   formatIndentation(element: TreeTableNode<number>, step: number = 5): string {
@@ -41,6 +41,6 @@ export class TreetableComponent implements OnInit {
         .fold([], n => n.pathToRoot)
         .every(p => this.treeTable.find(x => x.id === p.id).isExpanded);
     });
-    this.generateTable();
+    this.dataSource = this.generateDataSource();
   }
 }
