@@ -34,19 +34,10 @@ export class TreeService {
   }
 
   private _traverse<T>(root: Node<T>, f: (node: Node<T>) => boolean): void {
-    const stack: Node<T>[] = [];
-    if (root) {
-      stack.push(root);
-      while (stack.length > 0) {
-        const node = stack.pop();
-        if (!f(node)) {
-          return;
-        }
-        node.children.forEach(item => {
-          stack.push(item);
-        });
-      }
+    if (!f(root)) {
+      return;
     }
+    root.children.forEach(c => this._traverse(c, f));
   }
 
   getNodeDepth<T>(root: Node<T>, node: Node<T>): number {
