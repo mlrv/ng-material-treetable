@@ -17,6 +17,6 @@ import { TreetableComponent } from './component/treetable.component';
   ],
   exports: [
     TreetableComponent
-  ],
+  ]
 })
 export class TreetableModule { }

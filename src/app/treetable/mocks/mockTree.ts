@@ -23,15 +23,12 @@ export const mockNumberTree: Node<number> = {
   ]
 };
 
-export const mockComplexTree: Node<IMock> = {
+export const mockComplexTree: Node<Mock> = {
   id: '1',
   value: {
     first: 'abc',
     second: 123,
-    third: {
-      foo: true,
-      bar: 'bar'
-    }
+    third: true
   },
   children: [
     {
@@ -39,10 +36,7 @@ export const mockComplexTree: Node<IMock> = {
       value: {
         first: 'xyz',
         second: 999,
-        third: {
-          foo: false,
-          bar: 'baz'
-        }
+        third: false
       },
       children: []
     },
@@ -51,10 +45,7 @@ export const mockComplexTree: Node<IMock> = {
       value: {
         first: 'hhh',
         second: 888,
-        third: {
-          foo: false,
-          bar: 'IMock'
-        }
+        third: false
       },
       children: []
     },
@@ -63,10 +54,7 @@ export const mockComplexTree: Node<IMock> = {
       value: {
         first: 'qwerty',
         second: 876,
-        third: {
-          foo: true,
-          bar: 'kek'
-        }
+        third: false
       },
       children: [
         {
@@ -74,10 +62,7 @@ export const mockComplexTree: Node<IMock> = {
           value: {
             first: 'xyz',
             second: 777,
-            third: {
-              foo: false,
-              bar: 'baz'
-            }
+            third: true
           },
           children: []
         },
@@ -86,10 +71,7 @@ export const mockComplexTree: Node<IMock> = {
           value: {
             first: 'xyz',
             second: 43821,
-            third: {
-              foo: false,
-              bar: 'yup'
-            }
+            third: false
           },
           children: [
             {
@@ -97,10 +79,7 @@ export const mockComplexTree: Node<IMock> = {
               value: {
                 first: 'pop',
                 second: 12345,
-                third: {
-                  foo: false,
-                  bar: 'baz'
-                }
+                third: false
               },
               children: []
             }
@@ -111,11 +90,9 @@ export const mockComplexTree: Node<IMock> = {
   ]
 };
 
-export interface IMock {
+
+export interface Mock {
   first: string;
   second: number;
-  third: {
-    foo: boolean;
-    bar: string;
-  };
+  third: boolean;
 }

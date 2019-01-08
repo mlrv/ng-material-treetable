@@ -13,3 +13,7 @@ export interface TreeTableNode<T> extends Node<T> {
 export interface NodeInTree<T> extends Node<T> {
   pathToRoot: Node<T>[];
 }
+
+export interface Options {
+  k: string;
+}

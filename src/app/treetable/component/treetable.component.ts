@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Node, TreeTableNode } from '../models';
+import { Node, TreeTableNode, Options } from '../models';
 import { TreeService } from '../services/tree/tree.service';
 import { MatTableDataSource } from '@angular/material';
 
@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class TreetableComponent<T> implements OnInit {
   @Input() tree: Node<T>;
+  @Input() options: Options;
   treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
   propertyColumns: string[];
@@ -31,7 +32,7 @@ export class TreetableComponent<T> implements OnInit {
     this.dataSource = this.generateDataSource();
   }
 
-  extractNodeProps(tree: Node<T> & { value: { [k: string]: any } }): string[] { // Assume only one level for now
+  extractNodeProps(tree: Node<T> & { value: { [k: string]: any } }): string[] {
     return Object.keys(tree.value).filter(x => typeof tree.value[x] !== 'object');
   }
 
