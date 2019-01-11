@@ -22,3 +22,8 @@ td[class*=' mat-column']{
 .mat-column-id {
   width: 15vw;
 }
+
+.mat-cell {
+  border-left: 1px solid #f0f0f5;
+  padding: 10px;
+}
