@@ -17,13 +17,15 @@ mat-icon {
 
 td[class*=' mat-column']{
   width: 10vw;
-}
-
-.mat-column-id {
-  width: 15vw;
+  min-width: 10vw;;
+  max-width: 10vw;
 }
 
 .mat-cell, .mat-header-cell {
   border-left: 1px solid #f0f0f5;
   padding: 10px;
+}
+
+td div {
+  word-break: break-all;
 }
