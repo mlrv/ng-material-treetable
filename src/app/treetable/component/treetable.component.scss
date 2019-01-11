@@ -14,3 +14,11 @@ mat-icon {
 .mat-row:hover {
   background-color: #f0f0f5;
 }
+
+td[class*=' mat-column']{
+  width: 10vw;
+}
+
+.mat-column-id {
+  width: 15vw;
+}

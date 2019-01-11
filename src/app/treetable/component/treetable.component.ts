@@ -13,16 +13,12 @@ export class TreetableComponent<T> implements OnInit {
   @Input() options: Options;
   treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
-  propertyColumns: string[];
   dataSource: MatTableDataSource<TreeTableNode<T>>;
-  idProp = 'id';
 
   constructor(private treeService: TreeService) { }
 
   ngOnInit() {
-    const actualProps = this.extractNodeProps(this.tree);
-    this.displayedColumns = [this.idProp, ...actualProps];
-    this.propertyColumns = this.displayedColumns.filter(x => x !== this.idProp);
+    this.displayedColumns = this.extractNodeProps(this.tree);
     this.treeService.traverse(this.tree, (node: TreeTableNode<T>) => {
       node.depth = this.treeService.getNodeDepth(this.tree, node);
       node.isExpanded = true;
