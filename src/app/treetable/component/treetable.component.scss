@@ -23,7 +23,7 @@ td[class*=' mat-column']{
   width: 15vw;
 }
 
-.mat-cell {
+.mat-cell, .mat-header-cell {
   border-left: 1px solid #f0f0f5;
   padding: 10px;
 }
