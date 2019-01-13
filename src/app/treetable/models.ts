@@ -15,5 +15,7 @@ export interface NodeInTree<T> extends Node<T> {
 }
 
 export interface Options {
-  k: string;
+  verticalSeparator?: boolean;
+  capitalisedHeader?: boolean;
+  highlightRowOnHover?: boolean;
 }
