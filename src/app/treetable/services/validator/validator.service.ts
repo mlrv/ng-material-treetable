@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Node } from '../../models';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -6,4 +8,12 @@ import { Injectable } from '@angular/core';
 export class ValidatorService {
 
   constructor() { }
+
+  validateCustomOrder<T>(node: Node<T>, customColumnOrder: Array<keyof T> & string[]): { valid: boolean, xor: string[] } {
+    const xor = _.xor(Object.keys(node.value), customColumnOrder);
+    return {
+      valid: _.isEmpty(xor),
+      xor
+    };
+  }
 }

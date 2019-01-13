@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Node } from './treetable/models';
+import { Node, Options } from './treetable/models';
 import { mockComplexTree, Mock } from './treetable/mocks/complexTree';
 import * as _ from 'lodash';
 
@@ -10,4 +10,7 @@ import * as _ from 'lodash';
 })
 export class AppComponent {
   tree: Node<Mock> = _.cloneDeep(mockComplexTree);
+  options: Options<Mock> = {
+    customColumnOrder: ['backup', 'owner', 'protected', 'name']
+  };
 }

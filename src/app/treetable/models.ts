@@ -14,8 +14,9 @@ export interface NodeInTree<T> extends Node<T> {
   pathToRoot: Node<T>[];
 }
 
-export interface Options {
+export interface Options<T> {
   verticalSeparator?: boolean;
   capitalisedHeader?: boolean;
   highlightRowOnHover?: boolean;
+  customColumnOrder?: Array<keyof T> & string[];
 }

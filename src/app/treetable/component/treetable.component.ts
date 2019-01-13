@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Node, TreeTableNode, Options } from '../models';
 import { TreeService } from '../services/tree/tree.service';
 import { MatTableDataSource } from '@angular/material';
+import { ValidatorService } from '../services/validator/validator.service';
 
 @Component({
   selector: 'app-treetable',
@@ -10,15 +11,21 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class TreetableComponent<T> implements OnInit {
   @Input() tree: Node<T>;
-  @Input() options: Options;
+  @Input() options: Options<T>;
   treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
   dataSource: MatTableDataSource<TreeTableNode<T>>;
 
-  constructor(private treeService: TreeService) { }
+  constructor(private treeService: TreeService, private validatorService: ValidatorService) { }
 
   ngOnInit() {
-    this.displayedColumns = this.extractNodeProps(this.tree);
+    if (this.options.customColumnOrder && !this.validatorService.validateCustomOrder(this.tree, this.options.customColumnOrder).valid) {
+      const missingColumns = this.validatorService.validateCustomOrder(this.tree, this.options.customColumnOrder).xor;
+      throw new Error(`Properties ${missingColumns.map(x => `'${x}'`).join(', ')} incorrect or missing in customColumnOrder`);
+    }
+    this.displayedColumns = this.options.customColumnOrder
+      ? this.options.customColumnOrder
+      : this.extractNodeProps(this.tree);
     this.treeService.traverse(this.tree, (node: TreeTableNode<T>) => {
       node.depth = this.treeService.getNodeDepth(this.tree, node);
       node.isExpanded = true;
