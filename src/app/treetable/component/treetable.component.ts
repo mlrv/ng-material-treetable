@@ -11,7 +11,7 @@ import { ValidatorService } from '../services/validator/validator.service';
 })
 export class TreetableComponent<T> implements OnInit {
   @Input() tree: Node<T>;
-  @Input() options: Options<T>;
+  @Input() options: Options<T> = {};
   treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
   dataSource: MatTableDataSource<TreeTableNode<T>>;
