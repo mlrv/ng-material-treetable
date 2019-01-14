@@ -1,6 +1,6 @@
 import { Node } from '../models';
 
-export const mockComplexTree: Node<Mock> = {
+export const mockTree: Node<Mock> = {
   id: '1',
   value: {
     name: 'Reports',
