@@ -2,8 +2,10 @@
 
   <div *ngFor="let column of displayedColumns; first as isFirst;">
     <ng-container matColumnDef="{{column}}">
-      <th mat-header-cell *matHeaderCellDef> {{options.capitalisedHeader ? (column | titlecase) : column}} </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell *matHeaderCellDef [ngClass]="{'vertical-separator': options.verticalSeparator}">
+        {{options.capitalisedHeader ? (column | titlecase) : column}}
+      </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'vertical-separator': options.verticalSeparator}">
         <div *ngIf="isFirst">
           <div class="value-cell">
             <div [innerHTML]="formatIndentation(element)"></div>

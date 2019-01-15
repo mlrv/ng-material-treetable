@@ -22,8 +22,11 @@ td[class*=' mat-column']{
 }
 
 .mat-cell, .mat-header-cell {
-  border-left: 1px solid #f0f0f5;
   padding: 10px;
+}
+
+.vertical-separator {
+  border-left: 1px solid #f0f0f5;
 }
 
 td div {
