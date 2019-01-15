@@ -2,7 +2,7 @@
 
   <div *ngFor="let column of displayedColumns; first as isFirst;">
     <ng-container matColumnDef="{{column}}">
-      <th mat-header-cell *matHeaderCellDef> {{column | titlecase}} </th>
+      <th mat-header-cell *matHeaderCellDef> {{options.capitalisedHeader ? (column | titlecase) : column}} </th>
       <td mat-cell *matCellDef="let element">
         <div *ngIf="isFirst">
           <div class="value-cell">
