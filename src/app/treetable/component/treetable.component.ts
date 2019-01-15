@@ -3,6 +3,8 @@ import { Node, TreeTableNode, Options } from '../models';
 import { TreeService } from '../services/tree/tree.service';
 import { MatTableDataSource } from '@angular/material';
 import { ValidatorService } from '../services/validator/validator.service';
+import { defaultOptions } from '../default.options';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-treetable',
@@ -19,6 +21,7 @@ export class TreetableComponent<T> implements OnInit {
   constructor(private treeService: TreeService, private validatorService: ValidatorService) { }
 
   ngOnInit() {
+    this.options = this.parseOptions(defaultOptions);
     if (this.options.customColumnOrder && !this.validatorService.validateCustomOrder(this.tree, this.options.customColumnOrder).valid) {
       const missingColumns = this.validatorService.validateCustomOrder(this.tree, this.options.customColumnOrder).xor;
       throw new Error(`Properties ${missingColumns.map(x => `'${x}'`).join(', ')} incorrect or missing in customColumnOrder`);
@@ -56,4 +59,10 @@ export class TreetableComponent<T> implements OnInit {
     });
     this.dataSource = this.generateDataSource();
   }
+
+  // Overrides default options with those specified by the user
+  parseOptions(defaultOpts: Options<T>): Options<T> {
+    return _.defaults(this.options, defaultOpts);
+  }
+
 }
