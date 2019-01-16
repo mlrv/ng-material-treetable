@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material';
 import { ValidatorService } from '../services/validator/validator.service';
 import { defaultOptions } from '../default.options';
 import * as _ from 'lodash';
+import { Required } from '../decorators/required.decorator';
 
 @Component({
   selector: 'app-treetable',
@@ -12,7 +13,7 @@ import * as _ from 'lodash';
   styleUrls: ['./treetable.component.scss']
 })
 export class TreetableComponent<T> implements OnInit {
-  @Input() tree: Node<T>;
+  @Input() @Required tree: Node<T>;
   @Input() options: Options<T> = {};
   treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
