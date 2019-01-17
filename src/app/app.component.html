@@ -1,1 +1,22 @@
-<app-treetable [tree]="tree" [options]="options"></app-treetable>
+<div class="title">
+  <div>
+    <h1>Angular Material TreeTable Component</h1>
+  </div>
+  <div>
+    <iframe
+      src="https://ghbtns.com/github-btn.html?user=mlrv&repo=ng-material-tree-table&type=star&count=true&size=large"
+    frameborder="0"
+    scrolling="0"
+    width="160px"
+    height="30px">
+  </iframe>
+  <iframe
+    src="https://ghbtns.com/github-btn.html?user=mlrv&repo=ng-material-tree-table&type=watch&count=true&size=large&v=2"
+    frameborder="0"
+    scrolling="0"
+    width="160px"
+    height="30px">
+  </iframe>
+  </div>
+</div>
+<app-treetable [tree]="tree" [options]="options" (nodeClicked)="onNodeClicked($event)"></app-treetable>
