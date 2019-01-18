@@ -1,17 +1,21 @@
-export interface Node<T> {
-  id: string;
+export interface BasicNode<T> {
   value: T;
-  children: Node<T>[];
+  children: BasicNode<T>[];
 }
 
-export interface TreeTableNode<T> extends Node<T> {
+export interface NodeWithId<T> extends BasicNode<T> {
+  id: string;
+  children: NodeWithId<T>[];
+}
+
+export interface TreeTableNode<T> extends NodeWithId<T> {
   depth: number;
   isVisible: boolean;
   isExpanded: boolean;
 }
 
-export interface NodeInTree<T> extends Node<T> {
-  pathToRoot: Node<T>[];
+export interface NodeInTree<T> extends NodeWithId<T> {
+  pathToRoot: NodeWithId<T>[];
 }
 
 export interface Options<T> {

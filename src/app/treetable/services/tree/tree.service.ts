@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Node, NodeInTree } from '../../models';
+import { BasicNode, NodeWithId, NodeInTree } from '../../models';
 import * as _ from 'lodash';
 import { Option, some, none } from 'fp-ts/lib/Option';
 
@@ -8,17 +8,17 @@ import { Option, some, none } from 'fp-ts/lib/Option';
 })
 export class TreeService {
 
-  traverse<T>(root: Node<T>, f: (node: Node<T>) => void): void {
-    this._traverse(root, (node: Node<T>) => {
+  traverse<T, K extends BasicNode<T>>(root: K, f: (node: K) => void): void {
+    this._traverse(root, (node: K) => {
       f(node);
       return true;
     });
   }
 
-  searchById<T>(root: Node<T>, id: string): Option<NodeInTree<T>> {
-    let matchingNode: Node<T>;
-    const pathToRoot: {[k: string]: Node<T>} = {};
-    this._traverse(root, (node: Node<T>) => {
+  searchById<T, K extends NodeWithId<T>>(root: K, id: string): Option<NodeInTree<T>> {
+    let matchingNode: K;
+    const pathToRoot: {[k: string]: K} = {};
+    this._traverse(root, (node: K) => {
       node.children.forEach(child => {
         pathToRoot[child.id] = node;
       });
@@ -28,23 +28,25 @@ export class TreeService {
       return node.id !== id;
     });
     return matchingNode ? some({
-      ...matchingNode,
+      id: matchingNode.id,
+      value: matchingNode.value,
+      children: matchingNode.children,
       pathToRoot: this.buildPath(id, pathToRoot)
     }) : none;
   }
 
-  private _traverse<T>(root: Node<T>, f: (node: Node<T>) => boolean): void {
+  private _traverse<T, K extends BasicNode<T>>(root: K, f: (node: K) => boolean): void {
     if (!f(root)) {
       return;
     }
     root.children.forEach(c => this._traverse(c, f));
   }
 
-  getNodeDepth<T>(root: Node<T>, node: Node<T>): number {
+  getNodeDepth<T, K extends NodeWithId<T>>(root: K, node: K): number {
     return this.searchById(root, node.id).fold(-1, n => n.pathToRoot.length);
   }
 
-  flatten<T>(root: Node<T>): Node<T>[] {
+  flatten<T>(root: BasicNode<T>): BasicNode<T>[] {
     const result = [_.cloneDeep(root)];
     for (let i = 0; i < result.length; i++) {
       const node = result[i];
@@ -55,7 +57,7 @@ export class TreeService {
     return result;
   }
 
-  private buildPath<T>(id: string, pathMap: {[k: string]: Node<T>}): Node<T>[] {
+  private buildPath<T, K extends NodeWithId<T>>(id: string, pathMap: {[k: string]: K}): K[] {
     const pathToRoot = [];
     let key = id;
     while (key) {

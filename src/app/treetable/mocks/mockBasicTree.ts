@@ -1,7 +1,6 @@
-import { Node } from '../models';
+import { BasicNode } from '../models';
 
-export const mockTree: Node<Mock> = {
-  id: '1',
+export const mockBasicTree: BasicNode<Mock> = {
   value: {
     name: 'Reports',
     owner: 'Eric',
@@ -10,7 +9,6 @@ export const mockTree: Node<Mock> = {
   },
   children: [
     {
-      id: '11',
       value: {
         name: 'Charts',
         owner: 'Stephanie',
@@ -20,7 +18,6 @@ export const mockTree: Node<Mock> = {
       children: []
     },
     {
-      id: '12',
       value: {
         name: 'Sales',
         owner: 'Virginia',
@@ -30,7 +27,6 @@ export const mockTree: Node<Mock> = {
       children: []
     },
     {
-      id: '13',
       value: {
         name: 'US',
         owner: 'Alison',
@@ -39,7 +35,6 @@ export const mockTree: Node<Mock> = {
       },
       children: [
         {
-          id: '131',
           value: {
             name: 'California',
             owner: 'Claire',
@@ -49,7 +44,6 @@ export const mockTree: Node<Mock> = {
           children: []
         },
         {
-          id: '132',
           value: {
             name: 'Washington',
             owner: 'Colin',
@@ -58,7 +52,6 @@ export const mockTree: Node<Mock> = {
           },
           children: [
             {
-              id: '1321',
               value: {
                 name: 'Domestic',
                 owner: 'Oliver',
@@ -68,7 +61,6 @@ export const mockTree: Node<Mock> = {
               children: []
             },
             {
-              id: '1322',
               value: {
                 name: 'International',
                 owner: 'Oliver',
