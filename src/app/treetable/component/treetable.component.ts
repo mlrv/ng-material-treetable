@@ -27,8 +27,9 @@ export class TreetableComponent<T> implements OnInit {
     this.options = this.parseOptions(defaultOptions);
     const customOrderValidator = this.validatorService.validateCustomOrder(this.tree, this.options.customColumnOrder);
     if (this.options.customColumnOrder && !customOrderValidator.valid) {
-      const missingColumns = customOrderValidator.xor;
-      throw new Error(`Properties ${missingColumns.map(x => `'${x}'`).join(', ')} incorrect or missing in customColumnOrder`);
+      throw new Error(`
+        Properties ${customOrderValidator.xor.map(x => `'${x}'`).join(', ')} incorrect or missing in customColumnOrder`
+      );
     }
     this.displayedColumns = this.options.customColumnOrder
       ? this.options.customColumnOrder
