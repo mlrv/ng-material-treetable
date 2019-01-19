@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { TreeService } from './tree.service';
 import * as _ from 'lodash';
-import { mockTreeWithId, Mock } from '../../mocks/mockTreeWithId';
+import { mockSearchableTree, Mock } from '../../mocks/mockSearchableTree';
 import { some, none } from 'fp-ts/lib/Option';
-import { NodeWithId, NodeInTree } from '../../models';
+import { SearchableNode, NodeInTree } from '../../models';
 
 describe('TreeService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -15,7 +15,7 @@ describe('TreeService', () => {
 
   it('should search for a node in a tree and return it warapped in Option<> if present', () => {
     const service: TreeService = TestBed.get(TreeService);
-    const tree = _.cloneDeep(mockTreeWithId);
+    const tree = _.cloneDeep(mockSearchableTree);
     const expectedNode = tree.children[0];
     const expectedPathToRoot = [tree];
     const id = expectedNode.id;
@@ -27,26 +27,26 @@ describe('TreeService', () => {
 
   it('should search for a node in a tree and return none if not present', () => {
     const service: TreeService = TestBed.get(TreeService);
-    const tree = _.cloneDeep(mockTreeWithId);
+    const tree = _.cloneDeep(mockSearchableTree);
     const id = '00000';
     expect(service.searchById(tree, id)).toEqual(none);
   });
 
   it('should traverse a tree and apply a function to all nodes', () => {
     const service: TreeService = TestBed.get(TreeService);
-    const tree = _.cloneDeep(mockTreeWithId);
+    const tree = _.cloneDeep(mockSearchableTree);
     service.traverse(tree, node => node.value.name = node.value.name.toUpperCase());
-    const compareNode = (originalNode: NodeWithId<Mock>, newNode: NodeInTree<Mock>) => {
+    const compareNode = (originalNode: SearchableNode<Mock>, newNode: NodeInTree<Mock>) => {
       return newNode.value.name === originalNode.value.name.toUpperCase();
     };
-    service.traverse(mockTreeWithId, n => {
+    service.traverse(mockSearchableTree, n => {
       expect(compareNode(n, service.searchById(tree, n.id).fold(null, x => x) as NodeInTree<Mock>)).toBe(true);
     });
   });
 
   it('should correctly flatten a tree', () => {
     const service: TreeService = TestBed.get(TreeService);
-    const tree = _.cloneDeep(mockTreeWithId);
+    const tree = _.cloneDeep(mockSearchableTree);
     const expectedFlattenedTree = [
       tree,
       tree.children[0],
@@ -62,7 +62,7 @@ describe('TreeService', () => {
 
   it('should return the depth of a node that\'s in the tree', () => {
     const service: TreeService = TestBed.get(TreeService);
-    const tree = _.cloneDeep(mockTreeWithId);
+    const tree = _.cloneDeep(mockSearchableTree);
     const firstLevelNode = tree.children[0];
     const secondLevelNode = tree.children[2].children[0];
     const thirdLevelNode = tree.children[2].children[1].children[0];
@@ -74,8 +74,8 @@ describe('TreeService', () => {
 
   it('should return a depth of -1 when the node is not in the tree', () => {
     const service: TreeService = TestBed.get(TreeService);
-    const tree = _.cloneDeep(mockTreeWithId);
-    const node: NodeWithId<Mock> = {
+    const tree = _.cloneDeep(mockSearchableTree);
+    const node: SearchableNode<Mock> = {
       id: '0000',
       value: {
         name: 'name',

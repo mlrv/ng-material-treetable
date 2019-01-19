@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
-import { BasicNode, TreeTableNode, Options, NodeWithId } from '../models';
+import { Node, TreeTableNode, Options, SearchableNode } from '../models';
 import { TreeService } from '../services/tree/tree.service';
 import { MatTableDataSource } from '@angular/material';
 import { ValidatorService } from '../services/validator/validator.service';
@@ -15,7 +15,7 @@ import * as uuidv4 from 'uuid/v4';
   styleUrls: ['./treetable.component.scss']
 })
 export class TreetableComponent<T> implements OnInit {
-  @Input() @Required tree: BasicNode<T>;
+  @Input() @Required tree: Node<T>;
   @Input() options: Options<T> = {};
   @Output() nodeClicked: Subject<TreeTableNode<T>> = new Subject();
   treeTable: TreeTableNode<T>[];
@@ -37,7 +37,7 @@ export class TreetableComponent<T> implements OnInit {
       : this.extractNodeProps(this.tree);
     this.treeService.traverse(this.tree, (node: TreeTableNode<T>) => {
       node.id = uuidv4();
-      node.depth = this.treeService.getNodeDepth(this.tree as NodeWithId<T>, node);
+      node.depth = this.treeService.getNodeDepth(this.tree as SearchableNode<T>, node);
       node.isExpanded = true;
       node.isVisible = true;
     });
@@ -45,7 +45,7 @@ export class TreetableComponent<T> implements OnInit {
     this.dataSource = this.generateDataSource();
   }
 
-  extractNodeProps(tree: BasicNode<T> & { value: { [k: string]: any } }): string[] {
+  extractNodeProps(tree: Node<T> & { value: { [k: string]: any } }): string[] {
     return Object.keys(tree.value).filter(x => typeof tree.value[x] !== 'object');
   }
 
@@ -60,7 +60,7 @@ export class TreetableComponent<T> implements OnInit {
   onNodeClick(clickedNode: TreeTableNode<T>): void {
     clickedNode.isExpanded = !clickedNode.isExpanded;
     this.treeTable.forEach(el => {
-      el.isVisible = this.treeService.searchById(this.tree as NodeWithId<T>, el.id)
+      el.isVisible = this.treeService.searchById(this.tree as SearchableNode<T>, el.id)
         .fold([], n => n.pathToRoot)
         .every(p => this.treeTable.find(x => x.id === p.id).isExpanded);
     });

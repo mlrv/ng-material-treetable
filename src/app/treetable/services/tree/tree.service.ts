@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BasicNode, NodeWithId, NodeInTree } from '../../models';
+import { Node, SearchableNode, NodeInTree } from '../../models';
 import * as _ from 'lodash';
 import { Option, some, none } from 'fp-ts/lib/Option';
 
@@ -8,14 +8,14 @@ import { Option, some, none } from 'fp-ts/lib/Option';
 })
 export class TreeService {
 
-  traverse<T, K extends BasicNode<T>>(root: K, f: (node: K) => void): void {
+  traverse<T, K extends Node<T>>(root: K, f: (node: K) => void): void {
     this._traverse(root, (node: K) => {
       f(node);
       return true;
     });
   }
 
-  searchById<T, K extends NodeWithId<T>>(root: K, id: string): Option<NodeInTree<T>> {
+  searchById<T, K extends SearchableNode<T>>(root: K, id: string): Option<NodeInTree<T>> {
     let matchingNode: K;
     const pathToRoot: {[k: string]: K} = {};
     this._traverse(root, (node: K) => {
@@ -35,18 +35,18 @@ export class TreeService {
     }) : none;
   }
 
-  private _traverse<T, K extends BasicNode<T>>(root: K, f: (node: K) => boolean): void {
+  private _traverse<T, K extends Node<T>>(root: K, f: (node: K) => boolean): void {
     if (!f(root)) {
       return;
     }
     root.children.forEach(c => this._traverse(c, f));
   }
 
-  getNodeDepth<T, K extends NodeWithId<T>>(root: K, node: K): number {
+  getNodeDepth<T, K extends SearchableNode<T>>(root: K, node: K): number {
     return this.searchById(root, node.id).fold(-1, n => n.pathToRoot.length);
   }
 
-  flatten<T>(root: BasicNode<T>): BasicNode<T>[] {
+  flatten<T>(root: Node<T>): Node<T>[] {
     const result = [_.cloneDeep(root)];
     for (let i = 0; i < result.length; i++) {
       const node = result[i];
@@ -57,7 +57,7 @@ export class TreeService {
     return result;
   }
 
-  private buildPath<T, K extends NodeWithId<T>>(id: string, pathMap: {[k: string]: K}): K[] {
+  private buildPath<T, K extends SearchableNode<T>>(id: string, pathMap: {[k: string]: K}): K[] {
     const pathToRoot = [];
     let key = id;
     while (key) {
