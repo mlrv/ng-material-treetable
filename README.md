@@ -4,6 +4,6 @@
 
 WIP... stay tuned for the first release!
 
-[Live Demo](http://ng-material-tree-table.surge.sh/)
+[Live Demo](http://ng-material-treetable.surge.sh/)
 
 ![Alt Text](assets/readme-gif.gif)
