@@ -11,7 +11,7 @@
     "packagr": "ng-packagr -p ng-package.json"
   },
   "private": false,
-  "dependencies": {
+  "devDependencies": {
     "@angular/animations": "^7.0.1",
     "@angular/cdk": "^7.0.2",
     "@angular/common": "~7.0.0",
@@ -25,28 +25,22 @@
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
-    "@types/lodash": "^4.14.119",
-    "core-js": "^2.5.4",
-    "document-register-element": "^1.7.2",
-    "fp-ts": "^1.12.1",
-    "jsverify": "^0.8.4",
-    "lodash": "^4.17.11",
-    "rxjs": "~6.3.3",
-    "uuid": "^3.3.2",
-    "zone.js": "~0.8.26"
-  },
-  "devDependencies": {
     "@angular-devkit/build-angular": "^0.12.1",
     "@angular/cli": "~7.0.3",
     "@angular/compiler-cli": "~7.0.0",
     "@angular/language-service": "~7.0.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/lodash": "^4.14.119",
     "@types/node": "^8.10.39",
     "@types/uuid": "^3.4.4",
     "codelyzer": "~4.5.0",
+    "core-js": "^2.5.4",
+    "document-register-element": "^1.7.2",
+    "fp-ts": "^1.13.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
+    "lodash": "^4.17.11",
     "karma": "~3.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
@@ -56,10 +50,13 @@
     "ng-packagr": "^4.4.0",
     "phantomjs-prebuilt": "^2.1.16",
     "protractor": "~5.4.0",
+    "rxjs": "~6.3.3",
     "ts-node": "~7.0.0",
     "tsickle": "^0.33.1",
     "tslint": "~5.11.0",
     "typescript": "~3.1.1",
-    "webpack-dev-server": "^3.1.14"
+    "uuid": "^3.3.2",
+    "webpack-dev-server": "^3.1.14",
+    "zone.js": "~0.8.26"
   }
 }
