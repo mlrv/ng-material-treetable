@@ -7,7 +7,7 @@ import { defaultOptions } from '../default.options';
 import * as _ from 'lodash';
 import { Required } from '../decorators/required.decorator';
 import { Subject } from 'rxjs';
-import * as uuidv4 from 'uuid/v4';
+const uuidv4 = require('uuid/v4');
 
 @Component({
   selector: 'app-treetable',
