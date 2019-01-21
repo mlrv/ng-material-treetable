@@ -1,6 +1,7 @@
 {
   "name": "ng-material-treetable",
-  "version": "0.0.0",
+  "description": "A customisable Angular Material TreeTable component",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,6 +11,11 @@
     "e2e": "ng e2e",
     "packagr": "ng-packagr -p ng-package.json"
   },
+  "author": {
+    "name": "Marco Levrero",
+    "url": "https://github.com/mlrv"
+  },
+  "license": "MIT",
   "private": false,
   "devDependencies": {
     "@angular/animations": "^7.0.1",
@@ -58,5 +64,6 @@
     "uuid": "^3.3.2",
     "webpack-dev-server": "^3.1.14",
     "zone.js": "~0.8.26"
-  }
+  },
+  "keywords": [ "angular", "ng", "material", "angular 2", "angular 4", "angular 5", "angular 6", "angular 7", "angular material", "material design", "tree", "treetable", "tree-table" ]
 }
