@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 const uuidv4 = require('uuid/v4');
 
 @Component({
-  selector: 'app-treetable',
+  selector: 'ng-treetable',
   templateUrl: './treetable.component.html',
   styleUrls: ['./treetable.component.scss']
 })
