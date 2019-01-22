@@ -53,7 +53,7 @@ interface Node<T> {
 Here's a simple example.
 
 
-```json
+```javascript
 {
   value: {
     name: 'Reports',
