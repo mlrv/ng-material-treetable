@@ -7,6 +7,8 @@
 
 [Live Demo](http://ng-material-treetable.surge.sh/)
 
+[StackBlitz Demo](https://stackblitz.com/edit/angular-qnlruj)
+
 ## Installation
 
 Simply install the package through `npm`
@@ -37,12 +39,19 @@ and use the component in your template
 <ng-treetable [tree]="yourTreeDataStructure"></ng-treetable>
 ```
 
+Finally, make sure you import the required material icons font in your `styles.css`
+
+```css
+@import url( 'https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons');
+```
 
 ## Data Format
 
 The tree object that's rendered by the component needs to satisfy a very simple `Node` interface
 
 ```typescript
+import { Node } from 'ng-material-treetable';
+
 interface Node<T> {
   value: T;
   children: Node<T>[];
@@ -136,6 +145,12 @@ Here's a simple example.
 
 An `option` input property can be used to customise the component
 
+```typescript
+import { Node, Options } from 'ng-material-treetable';
+```
+
+---
+
 ```html
 <ng-treetable
   [tree]="yourTreeDataStructure"
@@ -179,5 +194,27 @@ customColumnOrder: ['married', 'age'] // 'name' missing
 customColumnOrder: ['married', 'age', 'name', 'surname'] // 'surname' is not a valid key
 ```
 
+## Events
 
+> Work in Progress...
 
+| Name          | Description                                                                              | Type      |
+|---------------|------------------------------------------------------------------------------------------|-----------|
+| `nodeClicked` | Whenever a node is expanded or collapsed, emits an event with the new status of the node | `Node<T>` |
+
+### nodeClicked example
+
+```html
+<ng-treetable
+  [tree]="yourTreeDataStructure"
+  (nodeClicked)="logToggledNode($event)">
+</ng-treetable>
+```
+
+---
+
+```typescript
+logToggledNode(node: Node<SomeNodeType>): void {
+  console.log(node);
+}
+```
