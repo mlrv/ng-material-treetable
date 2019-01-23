@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/mlrv/ng-material-treetable.svg?branch=master)](https://travis-ci.com/mlrv/ng-material-tree-table)
 
 
-![Gif Demo](https://media.giphy.com/media/64CInKKyLZZB31kKDc/giphy.gif)
+![Gif Demo](assets/readme-gif.gif)
 
 [Live Demo](http://ng-material-treetable.surge.sh/)
 
