@@ -2,12 +2,21 @@
 
 [![Build Status](https://travis-ci.com/mlrv/ng-material-treetable.svg?branch=master)](https://travis-ci.com/mlrv/ng-material-tree-table)
 
+A simple, customisable, and easy to use Angular Material TreeTable component.
 
 ![Gif Demo](assets/readme-gif.gif)
 
 [Live Demo](http://ng-material-treetable.surge.sh/)
 
 [StackBlitz Demo](https://stackblitz.com/edit/angular-qnlruj)
+
+---
+
+> **Note**
+>
+>  Please note that this library is currently under active development.
+
+
 
 ## Installation
 
