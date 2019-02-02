@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, ElementRef } from '@angular/core';
 import { Node, TreeTableNode, Options, SearchableNode } from '../models';
 import { TreeService } from '../services/tree/tree.service';
 import { MatTableDataSource } from '@angular/material';
@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 const uuidv4 = require('uuid/v4');
 
 @Component({
-  selector: 'ng-treetable',
+  selector: 'ng-treetable, treetable', // 'ng-treetable' is currently being deprecated
   templateUrl: './treetable.component.html',
   styleUrls: ['./treetable.component.scss']
 })
@@ -22,7 +22,12 @@ export class TreetableComponent<T> implements OnInit {
   displayedColumns: string[];
   dataSource: MatTableDataSource<TreeTableNode<T>>;
 
-  constructor(private treeService: TreeService, private validatorService: ValidatorService) { }
+  constructor(private treeService: TreeService, private validatorService: ValidatorService, elem: ElementRef) {
+    const tagName = elem.nativeElement.tagName.toLowerCase();
+    if (tagName === 'ng-treetable') {
+      console.warn(`DEPRECATION WARNING: \n The 'ng-treetable' selector is being deprecated. Please use the new 'treetable' selector`);
+    }
+  }
 
   ngOnInit() {
     this.options = this.parseOptions(defaultOptions);

@@ -45,7 +45,7 @@ export class AppModule { }
 and use the component in your template
 
 ```html
-<ng-treetable [tree]="yourTreeDataStructure"></ng-treetable>
+<treetable [tree]="yourTreeDataStructure"></treetable>
 ```
 
 Finally, make sure you import the required material icons font in your `styles.css`
@@ -161,10 +161,10 @@ import { Node, Options } from 'ng-material-treetable';
 ---
 
 ```html
-<ng-treetable
+<treetable
   [tree]="yourTreeDataStructure"
   [options]="yourOptions">
-</ng-treetable>
+</treetable>
 ```
 
 | Name                  | Description                                                                                                                                                                                                                                                                                | Type      | Default |
@@ -214,10 +214,10 @@ customColumnOrder: ['married', 'age', 'name', 'surname'] // 'surname' is not a v
 ### nodeClicked example
 
 ```html
-<ng-treetable
+<treetable
   [tree]="yourTreeDataStructure"
   (nodeClicked)="logToggledNode($event)">
-</ng-treetable>
+</treetable>
 ```
 
 ---
