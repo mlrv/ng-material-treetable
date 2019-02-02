@@ -1,6 +1,6 @@
 # Angular Material TreeTable Component
 
-[![Build Status](https://travis-ci.com/mlrv/ng-material-treetable.svg?branch=master)](https://travis-ci.com/mlrv/ng-material-tree-table)
+[![Build Status](https://travis-ci.com/mlrv/ng-material-treetable.svg?branch=master)](https://travis-ci.com/mlrv/ng-material-tree-table) [![Greenkeeper badge](https://badges.greenkeeper.io/mlrv/ng-material-treetable.svg)](https://greenkeeper.io/)
 
 A simple, customisable, and easy to use Angular Material TreeTable component.
 
