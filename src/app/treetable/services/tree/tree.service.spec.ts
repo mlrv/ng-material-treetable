@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { TreeService } from './tree.service';
 import * as _ from 'lodash';
 import { mockSearchableTree } from '../../mocks/mockSearchableTree';
-import { Mock } from '../../mocks/mock';
+import { Folder } from '../../mocks/models';
 import { some, none } from 'fp-ts/lib/Option';
 import { SearchableNode, NodeInTree } from '../../models';
 
@@ -37,11 +37,11 @@ describe('TreeService', () => {
     const service: TreeService = TestBed.get(TreeService);
     const tree = _.cloneDeep(mockSearchableTree);
     service.traverse(tree, node => node.value.name = node.value.name.toUpperCase());
-    const compareNode = (originalNode: SearchableNode<Mock>, newNode: NodeInTree<Mock>) => {
+    const compareNode = (originalNode: SearchableNode<Folder>, newNode: NodeInTree<Folder>) => {
       return newNode.value.name === originalNode.value.name.toUpperCase();
     };
     service.traverse(mockSearchableTree, n => {
-      expect(compareNode(n, service.searchById(tree, n.id).fold(null, x => x) as NodeInTree<Mock>)).toBe(true);
+      expect(compareNode(n, service.searchById(tree, n.id).fold(null, x => x) as NodeInTree<Folder>)).toBe(true);
     });
   });
 
@@ -76,7 +76,7 @@ describe('TreeService', () => {
   it('should return a depth of -1 when the node is not in the tree', () => {
     const service: TreeService = TestBed.get(TreeService);
     const tree = _.cloneDeep(mockSearchableTree);
-    const node: SearchableNode<Mock> = {
+    const node: SearchableNode<Folder> = {
       id: '0000',
       value: {
         name: 'name',

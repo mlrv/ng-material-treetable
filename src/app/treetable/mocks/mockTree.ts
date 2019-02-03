@@ -1,7 +1,7 @@
 import { Node } from '../models';
-import { Mock } from './mock';
+import { Folder } from './models';
 
-export const mockTree: Node<Mock> = {
+export const mockTree: Node<Folder> = {
   value: {
     name: 'Reports',
     owner: 'Eric',
