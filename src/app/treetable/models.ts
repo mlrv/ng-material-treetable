@@ -12,6 +12,7 @@ export interface TreeTableNode<T> extends SearchableNode<T> {
   depth: number;
   isVisible: boolean;
   isExpanded: boolean;
+  children: TreeTableNode<T>[];
 }
 
 export interface NodeInTree<T> extends SearchableNode<T> {

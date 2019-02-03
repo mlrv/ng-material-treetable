@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ValidatorService } from './validator.service';
-import { mockSearchableTree, Mock } from '../../mocks/mockSearchableTree';
+import { mockSearchableTree } from '../../mocks/mockSearchableTree';
+import { Mock } from '../../mocks/mock';
 
 describe('ValidatorService', () => {
 
@@ -13,9 +14,8 @@ describe('ValidatorService', () => {
 
   it('should correctly process valid customColumnOrders', () => {
     const service: ValidatorService = TestBed.get(ValidatorService);
-    const tree = mockSearchableTree;
     const validCustomOrder: Array<keyof Mock>  =  ['backup', 'owner', 'protected', 'name'];
-    expect(service.validateCustomOrder(tree, validCustomOrder)).toEqual({
+    expect(service.validateCustomOrder(mockSearchableTree, validCustomOrder)).toEqual({
       valid: true,
       xor: []
     });
@@ -23,9 +23,8 @@ describe('ValidatorService', () => {
 
   it('should correctly process invalid customColumnOrders with missing properties', () => {
     const service: ValidatorService = TestBed.get(ValidatorService);
-    const tree = mockSearchableTree;
-    const validCustomOrder: Array<keyof Mock>  =  ['backup', 'owner', 'protected'];
-    expect(service.validateCustomOrder(tree, validCustomOrder)).toEqual({
+    const invalidCustomOrder: Array<keyof Mock>  =  ['backup', 'owner', 'protected'];
+    expect(service.validateCustomOrder(mockSearchableTree, invalidCustomOrder)).toEqual({
       valid: false,
       xor: ['name']
     });
@@ -33,9 +32,8 @@ describe('ValidatorService', () => {
 
   it('should correctly process invalid customColumnOrders with incorrect properties', () => {
     const service: ValidatorService = TestBed.get(ValidatorService);
-    const tree = mockSearchableTree;
-    const validCustomOrder: any  =  ['backup', 'owner', 'protected', 'name', 'notAValidProperty'];
-    expect(service.validateCustomOrder(tree, validCustomOrder)).toEqual({
+    const invalidCustomOrder: any  =  ['backup', 'owner', 'protected', 'name', 'notAValidProperty'];
+    expect(service.validateCustomOrder(mockSearchableTree, invalidCustomOrder)).toEqual({
       valid: false,
       xor: ['notAValidProperty']
     });
@@ -43,9 +41,8 @@ describe('ValidatorService', () => {
 
   it('should correctly process invalid customColumnOrders with incorrect and missing properties', () => {
     const service: ValidatorService = TestBed.get(ValidatorService);
-    const tree = mockSearchableTree;
-    const validCustomOrder: any  =  ['backup', 'protected', 'name', 'notAValidProperty'];
-    expect(service.validateCustomOrder(tree, validCustomOrder)).toEqual({
+    const invalidCustomOrder: any  =  ['backup', 'protected', 'name', 'notAValidProperty'];
+    expect(service.validateCustomOrder(mockSearchableTree, invalidCustomOrder)).toEqual({
       valid: false,
       xor: ['owner', 'notAValidProperty']
     });

@@ -1,4 +1,5 @@
 import { Node } from '../models';
+import { Mock } from './mock';
 
 export const mockTree: Node<Mock> = {
   value: {
@@ -76,9 +77,3 @@ export const mockTree: Node<Mock> = {
   ]
 };
 
-export interface Mock {
-  name: string;
-  owner: string;
-  protected: boolean;
-  backup: boolean;
-}
