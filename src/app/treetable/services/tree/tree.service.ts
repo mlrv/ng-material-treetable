@@ -8,6 +8,13 @@ import { Option, some, none } from 'fp-ts/lib/Option';
 })
 export class TreeService {
 
+  /**
+   * Traverse a tree data structure and applies the provided @param f function
+   * to all nodes
+   * @param root the tree to be traversed
+   * @param f the function to be applied to all nodes
+   * N.B. this function modifies the existing tree
+   */
   traverse<T, K extends Node<T>>(root: K, f: (node: K) => void): void {
     this._traverse(root, (node: K) => {
       f(node);
@@ -15,6 +22,11 @@ export class TreeService {
     });
   }
 
+  /**
+   * Search a tree for a node with the provided @param id
+   * @param root the tree to be searched
+   * @param id the id of the node to be retrieved
+   */
   searchById<T, K extends SearchableNode<T>>(root: K, id: string): Option<NodeInTree<T>> {
     let matchingNode: K;
     const pathToRoot: {[k: string]: K} = {};
@@ -35,6 +47,11 @@ export class TreeService {
     }) : none;
   }
 
+  /**
+   * Internal function that can be used to traverse or search the tree
+   * @param root the tree to be scanned
+   * @param f an optional function to be applied to all nodes
+   */
   private _traverse<T, K extends Node<T>>(root: K, f: (node: K) => boolean): void {
     if (!f(root)) {
       return;
@@ -42,21 +59,36 @@ export class TreeService {
     root.children.forEach(c => this._traverse(c, f));
   }
 
+  /**
+   * Given a @param root tree and a @param node node, calculate the
+   * depth of the node in the tree
+   * @param root the tree
+   * @param node the node we want to calculate the depth of
+   */
   getNodeDepth<T, K extends SearchableNode<T>>(root: K, node: K): number {
     return this.searchById(root, node.id).fold(-1, n => n.pathToRoot.length);
   }
 
-  flatten<T>(root: Node<T>): Node<T>[] {
+  /**
+   * Flatten a @param root tree into a list of its nodes
+   * @param root the tree to be flattened
+   */
+  flatten<T, K extends Node<T>>(root: K): K[] {
     const result = [_.cloneDeep(root)];
     for (let i = 0; i < result.length; i++) {
       const node = result[i];
       if (node.children) {
-        result.splice(result.indexOf(node) + 1, 0, ...node.children);
+        result.splice(result.indexOf(node) + 1, 0, ...node.children as K[]);
       }
     }
     return result;
   }
 
+  /**
+   * Internal function used to build the pathToRoot of a node in a tree
+   * @param id the id of the node
+   * @param pathMap the pathMap returned by searchById
+   */
   private buildPath<T, K extends SearchableNode<T>>(id: string, pathMap: {[k: string]: K}): K[] {
     const pathToRoot = [];
     let key = id;

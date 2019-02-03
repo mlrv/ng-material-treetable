@@ -1,6 +1,7 @@
 import { Node } from '../models';
+import { Folder } from './models';
 
-export const mockTree: Node<Mock> = {
+export const mockTree: Node<Folder> = {
   value: {
     name: 'Reports',
     owner: 'Eric',
@@ -76,9 +77,3 @@ export const mockTree: Node<Mock> = {
   ]
 };
 
-export interface Mock {
-  name: string;
-  owner: string;
-  protected: boolean;
-  backup: boolean;
-}
