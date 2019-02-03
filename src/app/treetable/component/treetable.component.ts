@@ -15,10 +15,10 @@ import { Subject } from 'rxjs';
   styleUrls: ['./treetable.component.scss']
 })
 export class TreetableComponent<T> implements OnInit {
-  @Input() @Required tree: Node<T>;
+  @Input() @Required tree: Node<T> | Node<T>[];
   @Input() options: Options<T> = {};
   @Output() nodeClicked: Subject<TreeTableNode<T>> = new Subject();
-  private searchableTree: SearchableNode<T>;
+  private searchableTree: SearchableNode<T>[];
   private treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
   dataSource: MatTableDataSource<TreeTableNode<T>>;
@@ -36,8 +36,9 @@ export class TreetableComponent<T> implements OnInit {
   }
 
   ngOnInit() {
+    this.tree = Array.isArray(this.tree) ? this.tree : [this.tree];
     this.options = this.parseOptions(defaultOptions);
-    const customOrderValidator = this.validatorService.validateCustomOrder(this.tree, this.options.customColumnOrder);
+    const customOrderValidator = this.validatorService.validateCustomOrder(this.tree[0], this.options.customColumnOrder);
     if (this.options.customColumnOrder && !customOrderValidator.valid) {
       throw new Error(`
         Properties ${customOrderValidator.xor.map(x => `'${x}'`).join(', ')} incorrect or missing in customColumnOrder`
@@ -45,10 +46,10 @@ export class TreetableComponent<T> implements OnInit {
     }
     this.displayedColumns = this.options.customColumnOrder
       ? this.options.customColumnOrder
-      : this.extractNodeProps(this.tree);
-    this.searchableTree = this.converterService.toSearchableTree(this.tree);
-    const treeTableTree = this.converterService.toTreeTableTree(this.searchableTree);
-    this.treeTable = this.treeService.flatten(treeTableTree);
+      : this.extractNodeProps(this.tree[0]);
+    this.searchableTree = this.tree.map(t => this.converterService.toSearchableTree(t));
+    const treeTableTree = this.searchableTree.map(st => this.converterService.toTreeTableTree(st));
+    this.treeTable = _.flatMap(treeTableTree, this.treeService.flatten);
     this.dataSource = this.generateDataSource();
   }
 
@@ -67,9 +68,11 @@ export class TreetableComponent<T> implements OnInit {
   onNodeClick(clickedNode: TreeTableNode<T>): void {
     clickedNode.isExpanded = !clickedNode.isExpanded;
     this.treeTable.forEach(el => {
-      el.isVisible = this.treeService.searchById(this.searchableTree, el.id)
-        .fold([], n => n.pathToRoot)
-        .every(p => this.treeTable.find(x => x.id === p.id).isExpanded);
+      el.isVisible = this.searchableTree.every(st => {
+        return this.treeService.searchById(st, el.id).
+          fold([], n => n.pathToRoot)
+          .every(p => this.treeTable.find(x => x.id === p.id).isExpanded);
+      });
     });
     this.dataSource = this.generateDataSource();
     this.nodeClicked.next(clickedNode);
