@@ -3,11 +3,11 @@ import { Node, TreeTableNode, Options, SearchableNode } from '../models';
 import { TreeService } from '../services/tree/tree.service';
 import { MatTableDataSource } from '@angular/material';
 import { ValidatorService } from '../services/validator/validator.service';
+import { ConverterService } from '../services/converter/converter.service';
 import { defaultOptions } from '../default.options';
 import * as _ from 'lodash';
 import { Required } from '../decorators/required.decorator';
 import { Subject } from 'rxjs';
-const uuidv4 = require('uuid/v4');
 
 @Component({
   selector: 'ng-treetable, treetable', // 'ng-treetable' is currently being deprecated
@@ -18,11 +18,17 @@ export class TreetableComponent<T> implements OnInit {
   @Input() @Required tree: Node<T>;
   @Input() options: Options<T> = {};
   @Output() nodeClicked: Subject<TreeTableNode<T>> = new Subject();
-  treeTable: TreeTableNode<T>[];
+  private searchableTree: SearchableNode<T>;
+  private treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
   dataSource: MatTableDataSource<TreeTableNode<T>>;
 
-  constructor(private treeService: TreeService, private validatorService: ValidatorService, elem: ElementRef) {
+  constructor(
+    private treeService: TreeService,
+    private validatorService: ValidatorService,
+    private converterService: ConverterService,
+    elem: ElementRef
+  ) {
     const tagName = elem.nativeElement.tagName.toLowerCase();
     if (tagName === 'ng-treetable') {
       console.warn(`DEPRECATION WARNING: \n The 'ng-treetable' selector is being deprecated. Please use the new 'treetable' selector`);
@@ -40,13 +46,9 @@ export class TreetableComponent<T> implements OnInit {
     this.displayedColumns = this.options.customColumnOrder
       ? this.options.customColumnOrder
       : this.extractNodeProps(this.tree);
-    this.treeService.traverse(this.tree, (node: TreeTableNode<T>) => {
-      node.id = uuidv4();
-      node.depth = this.treeService.getNodeDepth(this.tree as SearchableNode<T>, node);
-      node.isExpanded = true;
-      node.isVisible = true;
-    });
-    this.treeTable = this.treeService.flatten(this.tree) as TreeTableNode<T>[];
+    this.searchableTree = this.converterService.toSearchableTree(this.tree);
+    const treeTableTree = this.converterService.toTreeTableTree(this.searchableTree);
+    this.treeTable = this.treeService.flatten(treeTableTree);
     this.dataSource = this.generateDataSource();
   }
 
@@ -65,7 +67,7 @@ export class TreetableComponent<T> implements OnInit {
   onNodeClick(clickedNode: TreeTableNode<T>): void {
     clickedNode.isExpanded = !clickedNode.isExpanded;
     this.treeTable.forEach(el => {
-      el.isVisible = this.treeService.searchById(this.tree as SearchableNode<T>, el.id)
+      el.isVisible = this.treeService.searchById(this.searchableTree, el.id)
         .fold([], n => n.pathToRoot)
         .every(p => this.treeTable.find(x => x.id === p.id).isExpanded);
     });

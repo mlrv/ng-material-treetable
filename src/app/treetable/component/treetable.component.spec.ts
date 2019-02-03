@@ -34,7 +34,7 @@ describe('TreetableComponent', () => {
   });
 
   it('should emit an event when a node is clicked', () => {
-    const clickedNode = component.treeTable[0];
+    const clickedNode = (component as any).treeTable[0];
     component.nodeClicked.subscribe(n => expect(n).toBe(clickedNode));
     component.onNodeClick(clickedNode);
   });

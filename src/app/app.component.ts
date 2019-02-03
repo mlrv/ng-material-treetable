@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Node } from './treetable/models';
-import { mockTree, Mock } from './treetable/mocks/mockTree';
+import { mockTree } from './treetable/mocks/mockTree';
+import { Mock } from './treetable/mocks/mock';
 import * as _ from 'lodash';
 
 @Component({
