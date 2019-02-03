@@ -1,7 +1,7 @@
 import { TreeTableNode } from '../models';
-import { Mock } from './mock';
+import { Folder } from './models';
 
-export const mockTreeTableTree: TreeTableNode<Mock> = {
+export const mockTreeTableTree: TreeTableNode<Folder> = {
   value: {
     name: 'Reports',
     owner: 'Eric',

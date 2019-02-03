@@ -56,12 +56,12 @@ and use the component in your template
 Finally, make sure you import the required material icons font in your `styles.css`
 
 ```css
-@import url( 'https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons');
 ```
 
 ## Data Format
 
-The tree object that's rendered by the component needs to satisfy a very simple `Node` interface
+The tree object that's rendered by the component can either be a `Node<T>` or a `Node<T>[]` where `Node<T>` is the following interface
 
 ```typescript
 import { Node } from 'ng-material-treetable';

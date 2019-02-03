@@ -1,7 +1,7 @@
 import { SearchableNode } from '../models';
-import { Mock } from './mock';
+import { Folder } from './models';
 
-export const mockSearchableTree: SearchableNode<Mock> = {
+export const mockSearchableTree: SearchableNode<Folder> = {
   id: '1',
   value: {
     name: 'Reports',
