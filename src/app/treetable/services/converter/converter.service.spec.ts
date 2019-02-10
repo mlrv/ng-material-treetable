@@ -24,7 +24,7 @@ describe('ConverterService', () => {
     const service: ConverterService = TestBed.get(ConverterService);
     expect(instanceOfSearchableNode(mockSearchableTree)).toBe(true);
     expect(instanceOfTreeTableNodee(mockSearchableTree)).toBe(false);
-    expect(instanceOfSearchableNode(service.toTreeTableTree(mockSearchableTree))).toBe(true);
+    expect(instanceOfSearchableNode(service.toTreeTableTree(mockSearchableTree, true))).toBe(true);
   });
 
   it('should do nothing to trees that are already of the required type', () => {
@@ -37,8 +37,8 @@ describe('ConverterService', () => {
     const service: ConverterService = TestBed.get(ConverterService);
     expect(mockSearchableTree !== service.toSearchableTree(mockSearchableTree)).toBe(true);
     expect(_.isEqual(mockSearchableTree, service.toSearchableTree(mockSearchableTree))).toBe(true);
-    expect(mockTreeTableTree !== service.toTreeTableTree(mockTreeTableTree)).toBe(true);
-    expect(_.isEqual(mockTreeTableTree, service.toTreeTableTree(mockTreeTableTree))).toBe(true);
+    expect(mockTreeTableTree !== service.toTreeTableTree(mockTreeTableTree, true)).toBe(true);
+    expect(_.isEqual(mockTreeTableTree, service.toTreeTableTree(mockTreeTableTree, true))).toBe(true);
   });
 
 });
