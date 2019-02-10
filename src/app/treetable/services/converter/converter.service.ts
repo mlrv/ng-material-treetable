@@ -26,13 +26,14 @@ export class ConverterService {
   /**
    * Clone a SearchableNode<T> object and convert it to a TreeTableNode<T>
    * @param tree the node to be converted
+   * @param startExpanded whether to initialise the tree as fully expanded or not
    */
-  toTreeTableTree<T>(tree: SearchableNode<T>): TreeTableNode<T> {
+  toTreeTableTree<T>(tree: SearchableNode<T>, startExpanded: boolean): TreeTableNode<T> {
     const treeClone = _.cloneDeep(tree) as TreeTableNode<T>;
     this.treeService.traverse(treeClone, (node: TreeTableNode<T>) => {
       node.depth = this.treeService.getNodeDepth(treeClone, node);
-      node.isExpanded = true;
-      node.isVisible = true;
+      node.isExpanded = startExpanded;
+      node.isVisible = startExpanded || node === treeClone; // The root node is always visible
     });
     return treeClone;
   }

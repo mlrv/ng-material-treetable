@@ -48,7 +48,7 @@ export class TreetableComponent<T> implements OnInit {
       ? this.options.customColumnOrder
       : this.extractNodeProps(this.tree[0]);
     this.searchableTree = this.tree.map(t => this.converterService.toSearchableTree(t));
-    const treeTableTree = this.searchableTree.map(st => this.converterService.toTreeTableTree(st));
+    const treeTableTree = this.searchableTree.map(st => this.converterService.toTreeTableTree(st, this.options.startExpanded));
     this.treeTable = _.flatMap(treeTableTree, this.treeService.flatten);
     this.dataSource = this.generateDataSource();
   }
