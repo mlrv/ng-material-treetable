@@ -65,7 +65,7 @@ export class TreetableComponent<T> implements OnInit {
     return '&nbsp;'.repeat(node.depth * step);
   }
 
-	private formatElevation(): string {
+	formatElevation(): string {
 		return `mat-elevation-z${this.options.elevation}`;
 	}
 
