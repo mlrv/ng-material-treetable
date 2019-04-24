@@ -65,6 +65,10 @@ export class TreetableComponent<T> implements OnInit {
     return '&nbsp;'.repeat(node.depth * step);
   }
 
+	formatElevation(): string {
+		return `mat-elevation-z${this.options.elevation}`;
+	}
+
   onNodeClick(clickedNode: TreeTableNode<T>): void {
     clickedNode.isExpanded = !clickedNode.isExpanded;
     this.treeTable.forEach(el => {

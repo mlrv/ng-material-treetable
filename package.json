@@ -1,7 +1,7 @@
 {
   "name": "ng-material-treetable",
   "description": "A customisable Angular Material TreeTable component",
-  "version": "0.4.1",
+  "version": "0.5.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "packagr": "ng-packagr -p ng-package.json"
+    "packagr": "ng-packagr -p ng-package.json",
+		"postinstall": "npm rebuild node-sass"
   },
   "author": {
     "name": "Marco Levrero",
