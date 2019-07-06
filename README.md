@@ -34,7 +34,7 @@ npm i ng-material-treetable --save
 Make sure you have the angular material packages installed
 
 ```
-npm install @angular/material @angular/cdk @angular/animations --save
+npm i @angular/material @angular/cdk @angular/animations --save
 ```
 
 import the main module
