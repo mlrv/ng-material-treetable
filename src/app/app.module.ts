@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { TreetableModule } from './treetable/treetable.module';
 
@@ -7,6 +8,7 @@ import { TreetableModule } from './treetable/treetable.module';
     AppComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     TreetableModule
   ],
   providers: [],
