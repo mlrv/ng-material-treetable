@@ -4,6 +4,7 @@
     "entryFile": "public_api.ts"
   },
   "whitelistedNonPeerDependencies": [
-    "fp-ts"
+    "fp-ts",
+    "lodash-es"
   ]
 }

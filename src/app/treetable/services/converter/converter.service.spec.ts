@@ -4,7 +4,7 @@ import { SearchableNode, TreeTableNode } from '../../models';
 import { mockSearchableTree } from '../../mocks/mockSearchableTree';
 import { mockTree } from '../../mocks/mockTree';
 import { mockTreeTableTree } from '../../mocks/mockTreeTableTree';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 
 describe('ConverterService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
