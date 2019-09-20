@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Node } from '../../models';
-import * as _ from 'lodash';
+import { isEmpty, xor } from 'lodash-es';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +8,10 @@ import * as _ from 'lodash';
 export class ValidatorService {
 
   validateCustomOrder<T, K extends Node<T>>(node: K, customColumnOrder: Array<keyof T> & string[]): { valid: boolean, xor: string[] } {
-    const xor = _.xor(Object.keys(node.value), customColumnOrder);
+    const xorN = xor(Object.keys(node.value), customColumnOrder);
     return {
-      valid: _.isEmpty(xor),
-      xor
+      valid: isEmpty(xorN),
+      xor: xorN
     };
   }
 

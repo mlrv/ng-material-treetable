@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material';
 import { ValidatorService } from '../services/validator/validator.service';
 import { ConverterService } from '../services/converter/converter.service';
 import { defaultOptions } from '../default.options';
-import * as _ from 'lodash';
+import { flatMap, defaults } from 'lodash-es';
 import { Required } from '../decorators/required.decorator';
 import { Subject } from 'rxjs';
 
@@ -49,7 +49,7 @@ export class TreetableComponent<T> implements OnInit {
       : this.extractNodeProps(this.tree[0]);
     this.searchableTree = this.tree.map(t => this.converterService.toSearchableTree(t));
     const treeTableTree = this.searchableTree.map(st => this.converterService.toTreeTableTree(st));
-    this.treeTable = _.flatMap(treeTableTree, this.treeService.flatten);
+    this.treeTable = flatMap(treeTableTree, this.treeService.flatten);
     this.dataSource = this.generateDataSource();
   }
 
@@ -84,7 +84,7 @@ export class TreetableComponent<T> implements OnInit {
 
   // Overrides default options with those specified by the user
   parseOptions(defaultOpts: Options<T>): Options<T> {
-    return _.defaults(this.options, defaultOpts);
+    return defaults(this.options, defaultOpts);
   }
 
 }

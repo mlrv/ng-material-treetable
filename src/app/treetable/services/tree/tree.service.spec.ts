@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { TreeService } from './tree.service';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 import { mockSearchableTree } from '../../mocks/mockSearchableTree';
 import { Folder } from '../../mocks/models';
 import { some, none } from 'fp-ts/lib/Option';

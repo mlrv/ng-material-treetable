@@ -18,6 +18,8 @@
       "dom"
     ],
     "noImplicitAny": true,
-    "alwaysStrict": true
+    "alwaysStrict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   }
 }

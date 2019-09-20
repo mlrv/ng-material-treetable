@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TreeService } from '../tree/tree.service';
 import { Node, SearchableNode, TreeTableNode } from '../../models';
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash-es';
 const uuidv4 = require('uuid/v4');
 
 @Injectable({
@@ -16,7 +16,7 @@ export class ConverterService {
    * @param tree the node to be converted
    */
   toSearchableTree<T>(tree: Node<T>): SearchableNode<T> {
-    const treeClone = _.cloneDeep(tree) as SearchableNode<T>;
+    const treeClone = cloneDeep(tree) as SearchableNode<T>;
     this.treeService.traverse(treeClone, (node: SearchableNode<T>) => {
       node.id = node.id ? node.id : uuidv4();
     });
@@ -28,7 +28,7 @@ export class ConverterService {
    * @param tree the node to be converted
    */
   toTreeTableTree<T>(tree: SearchableNode<T>): TreeTableNode<T> {
-    const treeClone = _.cloneDeep(tree) as TreeTableNode<T>;
+    const treeClone = cloneDeep(tree) as TreeTableNode<T>;
     this.treeService.traverse(treeClone, (node: TreeTableNode<T>) => {
       node.depth = this.treeService.getNodeDepth(treeClone, node);
       node.isExpanded = true;

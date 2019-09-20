@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Node, SearchableNode, NodeInTree } from '../../models';
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash-es';
 import { Option, some, none } from 'fp-ts/lib/Option';
 
 @Injectable({
@@ -74,7 +74,7 @@ export class TreeService {
    * @param root the tree to be flattened
    */
   flatten<T, K extends Node<T>>(root: K): K[] {
-    const result = [_.cloneDeep(root)];
+    const result = [cloneDeep(root)];
     for (let i = 0; i < result.length; i++) {
       const node = result[i];
       if (node.children) {
