@@ -15,6 +15,13 @@ mat-icon {
   background-color: #f0f0f5;
 }
 
+.expand-all {
+  position: relative;
+  left: -15px;
+  cursor: pointer;
+  padding: 10px;
+}
+
 td[class*=' mat-column']{
   width: 10vw;
   min-width: 10vw;;

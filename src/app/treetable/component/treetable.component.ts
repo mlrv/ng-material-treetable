@@ -88,7 +88,8 @@ export class TreetableComponent<T> implements OnInit, OnChanges {
 		return `mat-elevation-z${this.options.elevation}`;
 	}
 
-  onNodeClick(clickedNode: TreeTableNode<T>): void {
+  onNodeClick(clickedNode: TreeTableNode<T>, $event: Event): void {
+    $event.stopPropagation();
     clickedNode.isExpanded = !clickedNode.isExpanded;
     this.treeTable.forEach(el => {
       el.isVisible = this.searchableTree.every(st => {
@@ -99,6 +100,27 @@ export class TreetableComponent<T> implements OnInit, OnChanges {
     });
     this.dataSource = this.generateDataSource();
     this.nodeClicked.next(clickedNode);
+  }
+
+  toggleAll() {
+    if (!this.allElementsVisible()) {
+      this.treeTable.forEach(item => {
+        item.isExpanded = true;
+        item.isVisible = true;
+      });
+    } else {
+      this.treeTable.forEach((item, index) => {
+        item.isExpanded = false;
+        if (index > 0) {
+          item.isVisible = false;
+        }
+      });
+    }
+    this.dataSource = this.generateDataSource();
+  }
+
+  allElementsVisible(): boolean {
+    return this.treeTable.slice(1).every(item => item.isVisible);
   }
 
   // Overrides default options with those specified by the user
