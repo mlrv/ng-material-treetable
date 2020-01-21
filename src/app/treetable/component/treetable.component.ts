@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  ElementRef,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Node, TreeTableNode, Options, SearchableNode } from '../models';
 import { TreeService } from '../services/tree/tree.service';
 import { MatTableDataSource } from '@angular/material';
@@ -14,7 +22,7 @@ import { Subject } from 'rxjs';
   templateUrl: './treetable.component.html',
   styleUrls: ['./treetable.component.scss']
 })
-export class TreetableComponent<T> implements OnInit {
+export class TreetableComponent<T> implements OnInit, OnChanges {
   @Input() @Required tree: Node<T> | Node<T>[];
   @Input() options: Options<T> = {};
   @Output() nodeClicked: Subject<TreeTableNode<T>> = new Subject();
@@ -47,6 +55,17 @@ export class TreetableComponent<T> implements OnInit {
     this.displayedColumns = this.options.customColumnOrder
       ? this.options.customColumnOrder
       : this.extractNodeProps(this.tree[0]);
+    this.searchableTree = this.tree.map(t => this.converterService.toSearchableTree(t));
+    const treeTableTree = this.searchableTree.map(st => this.converterService.toTreeTableTree(st));
+    this.treeTable = flatMap(treeTableTree, this.treeService.flatten);
+    this.dataSource = this.generateDataSource();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.tree.isFirstChange()) {
+      return;
+    }
+    this.tree = Array.isArray(this.tree) ? this.tree : [this.tree];
     this.searchableTree = this.tree.map(t => this.converterService.toSearchableTree(t));
     const treeTableTree = this.searchableTree.map(st => this.converterService.toTreeTableTree(st));
     this.treeTable = flatMap(treeTableTree, this.treeService.flatten);
