@@ -5,6 +5,7 @@
   },
   "whitelistedNonPeerDependencies": [
     "fp-ts",
-    "lodash-es"
+    "lodash-es",
+    "node-sass"
   ]
 }
