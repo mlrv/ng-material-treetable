@@ -1,3 +1,21 @@
+# About this repository
+
+This is a fork of ng-material-treetable to work with Angular 9.
+
+Until the version in the npm repository works with Angular 9 you can build a tarball from this repository locally:
+
+```
+npm run-script packagr
+cd dist
+npm pack
+```
+
+... and reference the tarball in your projects' `package.json` like:
+
+```
+    "ng-material-treetable": "file:ng-material-treetable-0.5.5-angular9.tgz",
+```
+
 # Angular Material TreeTable Component
 
 [![Build Status](https://travis-ci.com/mlrv/ng-material-treetable.svg?branch=master)](https://travis-ci.com/mlrv/ng-material-tree-table)
