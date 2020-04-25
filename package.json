@@ -20,7 +20,8 @@
   "private": false,
   "dependencies": {
     "fp-ts": "^1.13.0",
-    "lodash-es": "^4.17.15"
+    "lodash-es": "^4.17.15",
+    "node-sass": "^4.14.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.901.3",
@@ -40,7 +41,7 @@
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/lodash-es": "^4.17.3",
-    "@types/node": "^8.10.39",
+    "@types/node": "^8.10.60",
     "@types/uuid": "^3.4.4",
     "codelyzer": "~4.5.0",
     "core-js": "^2.5.4",
