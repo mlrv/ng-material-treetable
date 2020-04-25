@@ -51,6 +51,7 @@ export class TreetableComponent<T> implements OnInit {
     const treeTableTree = this.searchableTree.map(st => this.converterService.toTreeTableTree(st, this.options));
     this.treeTable = flatMap(treeTableTree, this.treeService.flatten);
     this.dataSource = this.generateDataSource();
+    this.foldTree();
   }
 
   extractNodeProps(tree: Node<T> & { value: { [k: string]: any } }): string[] {
@@ -71,14 +72,7 @@ export class TreetableComponent<T> implements OnInit {
 
   onNodeClick(clickedNode: TreeTableNode<T>): void {
     clickedNode.isExpanded = !clickedNode.isExpanded;
-    this.treeTable.forEach(el => {
-      el.isVisible = this.searchableTree.every(st => {
-        return this.treeService.searchById(st, el.id).
-          fold([], n => n.pathToRoot)
-          .every(p => this.treeTable.find(x => x.id === p.id).isExpanded);
-      });
-    });
-    this.dataSource = this.generateDataSource();
+    this.foldTree();
     this.nodeClicked.next(clickedNode);
   }
 
@@ -87,4 +81,14 @@ export class TreetableComponent<T> implements OnInit {
     return defaults(this.options, defaultOpts);
   }
 
+  private foldTree() {
+    this.treeTable.forEach(el => {
+      el.isVisible = this.searchableTree.every(st => {
+        return this.treeService.searchById(st, el.id).
+          fold([], n => n.pathToRoot)
+          .every(p => this.treeTable.find(x => x.id === p.id).isExpanded);
+      });
+    });
+    this.dataSource = this.generateDataSource();
+  }
 }
