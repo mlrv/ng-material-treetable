@@ -38,7 +38,10 @@ export class TreetableComponent<T> implements OnInit {
   ngOnInit() {
     this.tree = Array.isArray(this.tree) ? this.tree : [this.tree];
     this.options = this.parseOptions(defaultOptions);
-    const customOrderValidator = this.validatorService.validateCustomOrder(this.tree[0], this.options.customColumnOrder);
+    const customOrderValidator = this.validatorService.validateCustomOrder(
+      (this.tree[0] as unknown) as Node<{ [x: string]: {} }>,
+      this.options.customColumnOrder
+    );
     if (this.options.customColumnOrder && !customOrderValidator.valid) {
       throw new Error(`
         Properties ${customOrderValidator.xor.map(x => `'${x}'`).join(', ')} incorrect or missing in customColumnOrder`
@@ -86,5 +89,4 @@ export class TreetableComponent<T> implements OnInit {
   parseOptions(defaultOpts: Options<T>): Options<T> {
     return defaults(this.options, defaultOpts);
   }
-
 }
