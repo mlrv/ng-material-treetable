@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, ElementRef } from '@angular/core';
 import { Node, TreeTableNode, Options, SearchableNode } from '../models';
 import { TreeService } from '../services/tree/tree.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { ValidatorService } from '../services/validator/validator.service';
 import { ConverterService } from '../services/converter/converter.service';
 import { defaultOptions } from '../default.options';
@@ -38,7 +38,10 @@ export class TreetableComponent<T> implements OnInit {
   ngOnInit() {
     this.tree = Array.isArray(this.tree) ? this.tree : [this.tree];
     this.options = this.parseOptions(defaultOptions);
-    const customOrderValidator = this.validatorService.validateCustomOrder(this.tree[0], this.options.customColumnOrder);
+    const customOrderValidator = this.validatorService.validateCustomOrder(
+      (this.tree[0] as unknown) as Node<{ [x: string]: {} }>,
+      this.options.customColumnOrder
+    );
     if (this.options.customColumnOrder && !customOrderValidator.valid) {
       throw new Error(`
         Properties ${customOrderValidator.xor.map(x => `'${x}'`).join(', ')} incorrect or missing in customColumnOrder`
@@ -86,5 +89,4 @@ export class TreetableComponent<T> implements OnInit {
   parseOptions(defaultOpts: Options<T>): Options<T> {
     return defaults(this.options, defaultOpts);
   }
-
 }
