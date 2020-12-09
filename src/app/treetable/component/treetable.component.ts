@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, ElementRef } from '@angular/core';
 import { Node, TreeTableNode, Options, SearchableNode } from '../models';
 import { TreeService } from '../services/tree/tree.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { ValidatorService } from '../services/validator/validator.service';
 import { ConverterService } from '../services/converter/converter.service';
 import { defaultOptions } from '../default.options';
