@@ -1,7 +1,7 @@
 {
   "name": "ng-material-treetable",
   "description": "A customisable Angular Material TreeTable component",
-  "version": "0.5.5",
+  "version": "0.5.5-ng11",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
