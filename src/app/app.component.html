@@ -21,7 +21,12 @@
 </div>
 
 <h2>Tree as Single Root Node</h2>
-<treetable [tree]="singleRootTree"></treetable>
+<treetable [tree]="singleRootTree" [widthTree]="90" ></treetable>
+
+<treetable [tree]="singleRootTree" [widthTree]="90" [options]="{
+  customColumnName: ['dupa', 'dupa1', 'dupa2', 'dupa3'],
+  circle: [true, false, true, true]
+}"></treetable>
 
 <h2>Tree as Array of Nodes</h2>
 <treetable [tree]="arrayOfNodesTree"></treetable>

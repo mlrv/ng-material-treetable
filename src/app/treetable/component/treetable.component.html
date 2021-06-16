@@ -1,9 +1,9 @@
-<table mat-table [dataSource]="dataSource" [ngClass]="formatElevation()">
+<table mat-table [dataSource]="dataSource" [ngClass]="formatElevation()" [style.width.px]="widthTree">
 
-  <div *ngFor="let column of displayedColumns; first as isFirst;">
+  <div *ngFor="let column of displayedColumns; first as isFirst; let i = index">
     <ng-container matColumnDef="{{column}}">
       <th mat-header-cell *matHeaderCellDef [ngClass]="{'vertical-separator': options.verticalSeparator}">
-        {{options.capitalisedHeader ? (column | titlecase) : column}}
+        {{customColumnName[i]}}
       </th>
       <td mat-cell *matCellDef="let element" [ngClass]="{'vertical-separator': options.verticalSeparator}">
         <div *ngIf="isFirst">
@@ -16,7 +16,12 @@
           </div>
         </div>
         <div *ngIf="!isFirst">
-          {{element.value[column]}}
+          <div *ngIf="!showCircle(i)">
+            {{element.value[column]}}
+          </div>
+          <div *ngIf="showCircle(i)">
+            <div class="circle"  [ngClass]="element.value[column] ? 'circle-red' : 'circle-green'"></div>
+          </div>
         </div>
       </td>
     </ng-container>

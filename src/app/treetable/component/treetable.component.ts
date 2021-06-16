@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, ElementRef } from '@angular/core';
 import { Node, TreeTableNode, Options, SearchableNode } from '../models';
 import { TreeService } from '../services/tree/tree.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { ValidatorService } from '../services/validator/validator.service';
 import { ConverterService } from '../services/converter/converter.service';
 import { defaultOptions } from '../default.options';
@@ -16,11 +16,13 @@ import { Subject } from 'rxjs';
 })
 export class TreetableComponent<T> implements OnInit {
   @Input() @Required tree: Node<T> | Node<T>[];
+  @Input() widthTree: number =100;
   @Input() options: Options<T> = {};
   @Output() nodeClicked: Subject<TreeTableNode<T>> = new Subject();
   private searchableTree: SearchableNode<T>[];
   private treeTable: TreeTableNode<T>[];
   displayedColumns: string[];
+  customColumnName: string[];
   dataSource: MatTableDataSource<TreeTableNode<T>>;
 
   constructor(
@@ -36,9 +38,13 @@ export class TreetableComponent<T> implements OnInit {
   }
 
   ngOnInit() {
+    console.log("options");
     this.tree = Array.isArray(this.tree) ? this.tree : [this.tree];
     this.options = this.parseOptions(defaultOptions);
-    const customOrderValidator = this.validatorService.validateCustomOrder(this.tree[0], this.options.customColumnOrder);
+    const customOrderValidator = this.validatorService.validateCustomOrder(
+      (this.tree[0] as unknown) as Node<{ [x: string]: {} }>,
+      this.options.customColumnOrder
+    );
     if (this.options.customColumnOrder && !customOrderValidator.valid) {
       throw new Error(`
         Properties ${customOrderValidator.xor.map(x => `'${x}'`).join(', ')} incorrect or missing in customColumnOrder`
@@ -46,6 +52,9 @@ export class TreetableComponent<T> implements OnInit {
     }
     this.displayedColumns = this.options.customColumnOrder
       ? this.options.customColumnOrder
+      : this.extractNodeProps(this.tree[0]);
+    this.customColumnName = this.options.customColumnName
+      ? this.options.customColumnName
       : this.extractNodeProps(this.tree[0]);
     this.searchableTree = this.tree.map(t => this.converterService.toSearchableTree(t));
     const treeTableTree = this.searchableTree.map(st => this.converterService.toTreeTableTree(st));
@@ -69,6 +78,10 @@ export class TreetableComponent<T> implements OnInit {
 		return `mat-elevation-z${this.options.elevation}`;
 	}
 
+  showCircle(index:any): boolean {
+    return this.options.circle?.[index]
+  }
+
   onNodeClick(clickedNode: TreeTableNode<T>): void {
     clickedNode.isExpanded = !clickedNode.isExpanded;
     this.treeTable.forEach(el => {
@@ -86,5 +99,4 @@ export class TreetableComponent<T> implements OnInit {
   parseOptions(defaultOpts: Options<T>): Options<T> {
     return defaults(this.options, defaultOpts);
   }
-
 }

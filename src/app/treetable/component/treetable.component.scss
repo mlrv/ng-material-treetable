@@ -1,5 +1,19 @@
 table {
-  width: 100%;
+  width: 90%;
+}
+
+.circle {
+    background-color: black;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.circle-red {
+  background-color: red;
+}
+.circle-green {
+  background-color: green;
 }
 
 .value-cell {
