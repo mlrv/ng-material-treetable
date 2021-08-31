@@ -12,6 +12,10 @@
     "packagr": "ng-packagr -p ng-package.json",
     "postinstall": "npm rebuild node-sass"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mlrv/ng-material-treetable.git"
+  },
   "author": {
     "name": "Marco Levrero",
     "url": "https://github.com/mlrv"
